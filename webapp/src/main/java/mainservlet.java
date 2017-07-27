@@ -31,7 +31,7 @@ import javax.mail.internet.MimeMultipart;
 
 
 @WebServlet("/mainservlet")
-@MultipartConfig(location="C://TEMP")
+
 public class mainservlet extends HttpServlet {
    mainservlet javaEmail=null;
  public void init() throws ServletException {}
@@ -41,29 +41,8 @@ public class mainservlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");
            String toMail = request.getParameter("email");
-         
-
-          try {
-           mainservlet javaEmail = new mainservlet();
-
-         javaEmail.sendEmail(toMail);
-           }
-            
-            out.println("Process Completed\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String name="event registered successfully";
-        response.getWriter().write(name);
-         RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");  
-        rd.include(request, response); 
-
-    }
-
-        public static void sendEmail(String to)
-{
-final String username = "divyadharshini.g@kggroup.com";
-final String password = "dd.nayagam";
+          final String username = "nirmalkumar.m@kggroup.com";
+final String password = "Thangaraj#123";
 Properties props = new Properties();
 props.put("mail.smtp.auth", "true");
 props.put("mail.smtp.starttls.enable", "false");
@@ -77,23 +56,23 @@ return new PasswordAuthentication(username, password);
 });
 try {
 Message message = new MimeMessage(session);
-message.setFrom(new InternetAddress("divyadharshini.g@kggroup.com"));
+message.setFrom(new InternetAddress("nirmalkumar.m@kggroup.com"));
 message.setRecipients(Message.RecipientType.TO,
-InternetAddress.parse(to));
+InternetAddress.parse(toMail));
 message.setSubject("A testing mail header !!!");
 message.setText("registerd successfully!");
-
-
 Transport.send(message);
 System.out.println("Done");
-
+request.getRequestDispatcher("index.jsp").include(request, response);
 
 }
-catch (MessagingException e)
+catch(Exception e)
 {
-throw new RuntimeException(e);
-
-}
+    e.printStackTrace();
 }
 
-}
+        } 
+         
+    }
+
+    
